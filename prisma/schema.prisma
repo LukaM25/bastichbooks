@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  READER
+}
+
+enum BookStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELED
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          Role           @default(READER)
+  accounts      Account[]
+  orders        Order[]
+  sessions      Session[]
+  wishlistItems WishlistItem[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([sessionToken])
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Category {
+  id          String         @id @default(cuid())
+  name        String         @unique
+  slug        String         @unique
+  description String
+  books       BookCategory[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model Book {
+  id               String         @id @default(cuid())
+  title            String
+  slug             String         @unique
+  subtitle         String?
+  shortDescription String
+  description      String
+  featuredQuote    String?
+  isbn             String?
+  pageCount        Int?
+  status           BookStatus     @default(DRAFT)
+  featured         Boolean        @default(false)
+  coverImageUrl    String?
+  heroImageUrl     String?
+  ebookFileUrl     String?
+  sampleUrl        String?
+  priceInCents     Int
+  releaseDate      DateTime?
+  publishedAt      DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  categories       BookCategory[]
+  orderItems       OrderItem[]
+  wishlistItems    WishlistItem[]
+}
+
+model BookCategory {
+  bookId      String
+  categoryId  String
+  assignedAt  DateTime @default(now())
+  book        Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([bookId, categoryId])
+}
+
+model Order {
+  id                      String       @id @default(cuid())
+  userId                  String
+  status                  OrderStatus  @default(PENDING)
+  currency                String       @default("usd")
+  subtotalInCents         Int
+  stripeCheckoutSessionId String?      @unique
+  stripePaymentIntentId   String?
+  paidAt                  DateTime?
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+  user                    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items                   OrderItem[]
+}
+
+model OrderItem {
+  id                String   @id @default(cuid())
+  orderId           String
+  bookId            String
+  unitAmountInCents Int
+  titleSnapshot     String
+  slugSnapshot      String
+  order             Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  book              Book     @relation(fields: [bookId], references: [id], onDelete: Restrict)
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
+}

@@ -1,0 +1,10 @@
+2026-04-14 16:49:52.620 CEST [26411] LOG:  starting PostgreSQL 14.19 (Homebrew) on aarch64-apple-darwin25.0.0, compiled by Apple clang version 17.0.0 (clang-1700.3.19.1), 64-bit
+2026-04-14 16:49:52.621 CEST [26411] LOG:  listening on IPv6 address "::1", port 5433
+2026-04-14 16:49:52.621 CEST [26411] LOG:  listening on IPv4 address "127.0.0.1", port 5433
+2026-04-14 16:49:52.622 CEST [26411] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5433"
+2026-04-14 16:49:52.623 CEST [26412] LOG:  database system was shut down at 2026-04-14 16:49:47 CEST
+2026-04-14 16:49:52.625 CEST [26411] LOG:  database system is ready to accept connections
+2026-04-14 16:50:56.993 CEST [26548] ERROR:  relation "_prisma_migrations" does not exist at character 126
+2026-04-14 16:50:56.993 CEST [26548] STATEMENT:  SELECT "id", "checksum", "finished_at", "migration_name", "logs", "rolled_back_at", "started_at", "applied_steps_count" FROM "_prisma_migrations" ORDER BY "started_at" ASC
+2026-04-14 19:32:59.872 CEST [33335] LOG:  could not receive data from client: Connection reset by peer
+2026-04-14 19:32:59.872 CEST [33331] LOG:  could not receive data from client: Connection reset by peer
