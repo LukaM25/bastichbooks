@@ -66,9 +66,6 @@ export default async function RootLayout({
       className={`${displayFont.variable} ${bodyFont.variable} ${bookTitleFont.variable}`}
     >
       <body>
-        <div className="page-grain" aria-hidden />
-        <div className="page-glow page-glow-left" aria-hidden />
-        <div className="page-glow page-glow-right" aria-hidden />
         <AppShell session={session}>{children}</AppShell>
       </body>
     </html>

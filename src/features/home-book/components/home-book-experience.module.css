@@ -1,5 +1,5 @@
 .bookExperience {
-  --body-bg: #f4ecdb;
+  --body-bg: #d0b086;
   --page-bg: #f7f0e2;
   --dark-text: #2a1f15;
   --book-ratio: 1.333;
@@ -7,18 +7,88 @@
   --base-size: calc(var(--baseline) * 1.2);
 
   display: flex;
+  position: relative;
+  align-items: center;
   justify-content: center;
+  min-height: 100svh;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: clamp(1.25rem, 2vw, 2.5rem) 0 clamp(2rem, 4vw, 3.5rem);
+  padding: clamp(1.5rem, 2.2vw, 2.75rem) 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 16%, rgba(255, 244, 215, 0.72) 0%, rgba(255, 244, 215, 0.34) 18%, rgba(255, 244, 215, 0) 42%),
+    radial-gradient(ellipse at 50% 60%, rgba(129, 88, 45, 0.18) 0%, rgba(129, 88, 45, 0) 48%),
+    linear-gradient(180deg, #ab885b 0%, #c29d6d 22%, #ccb082 52%, #bc9869 100%);
+}
+
+.bookExperience::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 231, 0.06), rgba(92, 63, 31, 0.18)),
+    url("/home-book/textures/paper/Paper004_2K-JPG_Color.jpg") center center / 960px auto repeat,
+    url("/home-backdrop/paper-vintage-00077.jpg") center center / 680px auto repeat;
+  background-blend-mode: normal, multiply, multiply;
+  mix-blend-mode: multiply;
+  opacity: 0.38;
+  filter: saturate(0.82) contrast(1.04);
+  pointer-events: none;
+}
+
+.bookExperience::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(255, 246, 224, 0.4) 0%, rgba(255, 246, 224, 0.22) 16%, rgba(255, 246, 224, 0) 38%),
+    radial-gradient(ellipse at 50% 74%, rgba(82, 55, 25, 0.2) 0%, rgba(82, 55, 25, 0) 34%),
+    radial-gradient(circle at center, rgba(255, 250, 241, 0) 34%, rgba(80, 56, 30, 0.26) 100%);
+  opacity: 1;
+  pointer-events: none;
 }
 
 .cover {
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
   width: min(75vw, calc((100svh - 9rem) * var(--book-ratio)), calc(100vw - 2rem));
   aspect-ratio: 4 / 3;
   box-shadow:
-    0 32px 90px rgba(48, 28, 13, 0.22),
+    0 50px 110px rgba(34, 20, 8, 0.2),
+    0 20px 42px rgba(34, 20, 8, 0.12),
     0 0 0 1px rgba(97, 70, 42, 0.08);
+}
+
+.cover::before {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -8%;
+  height: 22%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(23, 13, 5, 0.42) 0%,
+    rgba(23, 13, 5, 0.26) 38%,
+    rgba(23, 13, 5, 0.08) 58%,
+    transparent 80%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: -12% -10% -10%;
+  background:
+    radial-gradient(ellipse at 50% 28%, rgba(255, 243, 215, 0.42) 0%, rgba(255, 243, 215, 0.18) 24%, rgba(255, 243, 215, 0) 58%),
+    radial-gradient(ellipse at 50% 82%, rgba(110, 76, 38, 0.14) 0%, rgba(110, 76, 38, 0) 40%);
+  filter: blur(36px);
+  pointer-events: none;
+  z-index: -2;
 }
 
 .book {
@@ -303,11 +373,38 @@
 @media (max-width: 720px) {
   .bookExperience {
     --baseline: clamp(7px, 1.6vw + 2px, 11px);
-    padding-top: 1rem;
+    min-height: 100svh;
   }
 
   .cover {
     width: min(92vw, calc((100svh - 8rem) * var(--book-ratio)));
+  }
+
+  .bookExperience::before {
+    background:
+      linear-gradient(180deg, rgba(255, 248, 231, 0.06), rgba(92, 63, 31, 0.18)),
+      url("/home-book/textures/paper/Paper004_2K-JPG_Color.jpg") center center / 720px auto repeat,
+      url("/home-backdrop/paper-vintage-00077.jpg") center center / 520px auto repeat;
+    background-blend-mode: normal, multiply, multiply;
+    opacity: 0.34;
+  }
+
+  .bookExperience::after {
+    background:
+      radial-gradient(ellipse at 50% 18%, rgba(255, 244, 214, 0.32) 0%, rgba(255, 244, 214, 0.12) 18%, rgba(255, 244, 214, 0) 34%),
+      radial-gradient(ellipse at 50% 78%, rgba(82, 55, 25, 0.18) 0%, rgba(82, 55, 25, 0) 30%),
+      radial-gradient(circle at center, rgba(255, 251, 241, 0) 32%, rgba(92, 64, 31, 0.22) 100%);
+  }
+
+  .cover::before {
+    left: 0;
+    right: 0;
+    bottom: -5%;
+    height: 16%;
+  }
+
+  .cover::after {
+    inset: -8% -6% -8%;
   }
 
   .bookPage4 {

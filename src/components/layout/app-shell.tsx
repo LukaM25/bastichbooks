@@ -17,6 +17,9 @@ export function AppShell({
 
   return (
     <div className="relative min-h-screen">
+      {showChrome ? <div className="page-grain" aria-hidden /> : null}
+      {showChrome ? <div className="page-glow page-glow-left" aria-hidden /> : null}
+      {showChrome ? <div className="page-glow page-glow-right" aria-hidden /> : null}
       {showChrome ? <SiteHeader session={session} /> : null}
       <main
         className={
