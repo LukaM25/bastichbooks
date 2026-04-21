@@ -26,6 +26,8 @@ type ChapterPreview = {
   ctaLabel?: string;
 };
 
+type BorderVariant = "corners" | "frame";
+
 function buildChapterPreview(
   chapter: HomeChapterDefinition | null,
   featuredBooks: PublishedBookCard[],
@@ -105,6 +107,7 @@ export function HomeBookExperience({
   const resetInputRef = useRef<HTMLInputElement | null>(null);
   const openInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedChapter, setSelectedChapter] = useState<HomeChapterId | null>(null);
+  const [borderVariant, setBorderVariant] = useState<BorderVariant>("corners");
 
   const chapter = useMemo(
     () => homeChapters.find((entry) => entry.id === selectedChapter) ?? null,
@@ -133,7 +136,48 @@ export function HomeBookExperience({
   }
 
   return (
-    <section className={styles.bookExperience}>
+    <section
+      className={`${styles.bookExperience} ${
+        borderVariant === "corners" ? styles.bookExperienceCorners : styles.bookExperienceFrame
+      }`}
+    >
+      <div className={styles.siteBorderLayer} aria-hidden>
+        {borderVariant === "corners" ? (
+          <>
+            <span className={`${styles.siteBorderCorner} ${styles.siteBorderCornerTopLeft}`} />
+            <span className={`${styles.siteBorderCorner} ${styles.siteBorderCornerTopRight}`} />
+            <span className={`${styles.siteBorderCorner} ${styles.siteBorderCornerBottomLeft}`} />
+            <span className={`${styles.siteBorderCorner} ${styles.siteBorderCornerBottomRight}`} />
+          </>
+        ) : (
+          <>
+            <span className={`${styles.siteBorderSide} ${styles.siteBorderSideLeft}`} />
+            <span className={`${styles.siteBorderSide} ${styles.siteBorderSideRight}`} />
+          </>
+        )}
+      </div>
+
+      <div className={styles.borderChooser}>
+        <button
+          type="button"
+          className={`${styles.borderChoice} ${
+            borderVariant === "corners" ? styles.borderChoiceActive : ""
+          }`}
+          onClick={() => setBorderVariant("corners")}
+        >
+          Vine Corners
+        </button>
+        <button
+          type="button"
+          className={`${styles.borderChoice} ${
+            borderVariant === "frame" ? styles.borderChoiceActive : ""
+          }`}
+          onClick={() => setBorderVariant("frame")}
+        >
+          Side Frame
+        </button>
+      </div>
+
       <div className={styles.cover}>
         <div className={styles.book}>
           <label htmlFor={openPageId} className={`${styles.bookPage} ${styles.bookPage1}`}>

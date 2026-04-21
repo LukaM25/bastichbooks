@@ -21,6 +21,16 @@
     linear-gradient(180deg, #ab885b 0%, #c29d6d 22%, #ccb082 52%, #bc9869 100%);
 }
 
+.bookExperienceCorners {
+  --border-ink: rgba(86, 67, 40, 0.26);
+  --border-shadow: rgba(255, 240, 204, 0.18);
+}
+
+.bookExperienceFrame {
+  --border-ink: rgba(79, 60, 35, 0.22);
+  --border-shadow: rgba(255, 241, 214, 0.12);
+}
+
 .bookExperience::before {
   content: "";
   position: absolute;
@@ -89,6 +99,109 @@
   filter: blur(36px);
   pointer-events: none;
   z-index: -2;
+}
+
+.siteBorderLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.siteBorderCorner,
+.siteBorderSide {
+  position: absolute;
+  background-color: var(--border-ink);
+  opacity: 0.95;
+  filter: drop-shadow(0 0 14px var(--border-shadow));
+}
+
+.siteBorderCorner {
+  width: clamp(7rem, 12vw, 12rem);
+  aspect-ratio: 0.88;
+  -webkit-mask-image: url("/home-borders/floral-corner-paul-burck.svg");
+  mask-image: url("/home-borders/floral-corner-paul-burck.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.siteBorderCornerTopLeft {
+  top: clamp(1.5rem, 3.5vw, 3rem);
+  left: clamp(1.5rem, 3.6vw, 3.5rem);
+}
+
+.siteBorderCornerTopRight {
+  top: clamp(1.5rem, 3.5vw, 3rem);
+  right: clamp(1.5rem, 3.6vw, 3.5rem);
+  transform: scaleX(-1);
+}
+
+.siteBorderCornerBottomLeft {
+  bottom: clamp(1.5rem, 3.5vw, 3rem);
+  left: clamp(1.5rem, 3.6vw, 3.5rem);
+  transform: scaleY(-1);
+}
+
+.siteBorderCornerBottomRight {
+  right: clamp(1.5rem, 3.6vw, 3.5rem);
+  bottom: clamp(1.5rem, 3.5vw, 3rem);
+  transform: scale(-1);
+}
+
+.siteBorderSide {
+  top: 50%;
+  width: clamp(5rem, 8vw, 8rem);
+  height: min(70svh, 44rem);
+  -webkit-mask-image: url("/home-borders/secession-floral-ornament.svg");
+  mask-image: url("/home-borders/secession-floral-ornament.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  transform: translateY(-50%);
+}
+
+.siteBorderSideLeft {
+  left: clamp(0.75rem, 2vw, 2rem);
+}
+
+.siteBorderSideRight {
+  right: clamp(0.75rem, 2vw, 2rem);
+  transform: translateY(-50%) scaleX(-1);
+}
+
+.borderChooser {
+  position: absolute;
+  right: clamp(1rem, 2vw, 2rem);
+  bottom: clamp(1rem, 2vw, 2rem);
+  z-index: 2;
+  display: flex;
+  gap: 0.45rem;
+}
+
+.borderChoice {
+  border: 1px solid rgba(97, 70, 42, 0.18);
+  background: rgba(250, 242, 226, 0.74);
+  padding: 0.35rem 0.65rem;
+  color: #58412b;
+  cursor: pointer;
+  font-family: var(--font-body), serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.borderChoiceActive {
+  border-color: rgba(97, 70, 42, 0.34);
+  background: rgba(255, 250, 241, 0.92);
+  color: #332113;
 }
 
 .book {
@@ -378,6 +491,30 @@
 
   .cover {
     width: min(92vw, calc((100svh - 8rem) * var(--book-ratio)));
+  }
+
+  .siteBorderCorner {
+    width: clamp(4.5rem, 16vw, 6rem);
+    opacity: 0.78;
+  }
+
+  .siteBorderSide {
+    width: clamp(3.5rem, 9vw, 4.5rem);
+    height: min(58svh, 30rem);
+    opacity: 0.72;
+  }
+
+  .borderChooser {
+    right: 0.75rem;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    justify-content: center;
+  }
+
+  .borderChoice {
+    flex: 1 1 auto;
+    max-width: 10rem;
+    text-align: center;
   }
 
   .bookExperience::before {
